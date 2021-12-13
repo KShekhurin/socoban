@@ -27,10 +27,16 @@ class BoardFrame(Frame):
         super().__init__()
 
     def post_init(self):
-        width = random.randint(10, 15)
         game_map = [
-            "".join([random.choice([".", "#"]) for i in range(width)])
-            for k in range(random.randint(10, 15))
+            "###########",
+            "#s........#",
+            "#.b..#..b.#",
+            "#...x#x...#",
+            "#.#######.#",
+            "#...x#x...#",
+            "#..b.#..b.#",
+            "#.........#",
+            "###########",
         ]
 
         size = pygame.display.get_window_size()

@@ -20,7 +20,6 @@ class Gameboard(Widget):
         size = pygame.display.get_window_size()
         max_tile_size, mode = min((size[1] // len(self.board_map), "ver"),
                                   (size[0] // len(self.board_map[0]), "hor"))
-        print((pygame.display.get_window_size()[0] - max_tile_size * len(self.board_map[0])) / 2)
         x_offset = (size[0] - max_tile_size * len(self.board_map[0])) / 2
         y_offset = (size[1] - max_tile_size * len(self.board_map)) / 2
         for y, row in enumerate(self.board_map):
@@ -36,11 +35,14 @@ class Gameboard(Widget):
                 position[1] += y_offset
 
                 color = (255, 0, 0)
-                if tile == ".":
+                if tile in [".", "s"]:
                     color = (0, 255, 0)
+                if tile == "x":
+                    color = (100, 100, 100)
+                if tile == "b":
+                    color = (200, 100, 100)
 
                 pygame.draw.rect(screen, color, position)
-                #pygame.draw.rect(screen, (0, 0, 0), position, 1)
 
     def update(self, events):
         pass
