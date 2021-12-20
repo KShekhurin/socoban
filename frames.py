@@ -2,7 +2,7 @@ import random
 
 import pygame.display
 
-from widgets import Gameboard
+from widgets import Player, Gameboard
 
 
 class Frame:
@@ -12,6 +12,10 @@ class Frame:
 
     def post_init(self):
         pass
+
+    def append_widget(self, widget):
+        self.drawable.append(widget)
+        self.updatable.append(widget)
 
     def update(self, events):
         for updatable in self.updatable:
@@ -39,9 +43,10 @@ class BoardFrame(Frame):
             "###########",
         ]
 
-        size = pygame.display.get_window_size()
-        max_tile_size, mode = min((size[1] / len(game_map), "ver"), (size[0] / len(game_map[0]), "hor"))
-        self.board = Gameboard(game_map)
+        self.board_group = pygame.sprite.Group()
+        self.player_group = pygame.sprite.Group()
 
-        self.drawable.append(self.board)
-        self.updatable.append(self.board)
+        Gameboard(game_map, self.player_group, self.board_group)
+
+        self.append_widget(self.board_group)
+        self.append_widget(self.player_group)

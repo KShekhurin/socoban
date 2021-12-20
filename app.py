@@ -1,6 +1,7 @@
 import pygame
 from frames import Frame
 
+
 class App:
     def __init__(self, loaded_frame: Frame, start_size=(200, 200)):
         self.start_size = start_size
