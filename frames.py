@@ -1,8 +1,5 @@
-import random
-
 import pygame.display
-
-from widgets import Player, Gameboard
+from widgets import BoardGenerator
 
 
 class Frame:
@@ -16,6 +13,10 @@ class Frame:
     def append_widget(self, widget):
         self.drawable.append(widget)
         self.updatable.append(widget)
+
+    def append_many_widgets(self, widgets):
+        for widget in widgets:
+            self.append_widget(widget)
 
     def update(self, events):
         for updatable in self.updatable:
@@ -43,10 +44,27 @@ class BoardFrame(Frame):
             "###########",
         ]
 
-        self.board_group = pygame.sprite.Group()
+        self.blockable_group = pygame.sprite.Group()
+        self.bg_group = pygame.sprite.Group()
+        self.setters_group = pygame.sprite.Group()
+        self.walls_group = pygame.sprite.Group()
+        self.barrels_group = pygame.sprite.Group()
         self.player_group = pygame.sprite.Group()
 
-        Gameboard(game_map, self.player_group, self.board_group)
+        BoardGenerator(
+            game_map,
+            self.player_group,
+            self.barrels_group,
+            self.walls_group,
+            self.blockable_group,
+            self.bg_group,
+            self.setters_group
+        ).generate()
 
-        self.append_widget(self.board_group)
-        self.append_widget(self.player_group)
+        self.append_many_widgets([
+            self.bg_group,
+            self.setters_group,
+            self.walls_group,
+            self.player_group,
+            self.barrels_group,
+        ])
